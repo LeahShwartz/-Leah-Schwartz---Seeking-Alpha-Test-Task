@@ -1,11 +1,13 @@
+//Leah Schwartz
+
 const dom = {
     grid: document.querySelector('#grid'),
 }
-let listSquare = [];
+let listSquare = [];//Array for the squares of the grid
 
 //function to create grid
 const createGrid = (width, height) => {
-    let grid=[];
+    let grid = [];
     for (let i = 0; i < width; i++) {
         let row = [];
         for (let j = 0; j < height; j++) {
@@ -13,9 +15,9 @@ const createGrid = (width, height) => {
             div.className = "deadSquare";//class to basic design
             div.id = "" + i + j;
             dom.grid.appendChild(div);//add to dom
-            row.push(div);//add to row for list grid
+            row.push(div);//add to row for array grid
         }
-        grid.push(row);//add to list grid
+        grid.push(row);//add to array grid
         const br = document.createElement('br');//line break
         dom.grid.appendChild(br);
     }
@@ -26,7 +28,7 @@ const createGrid = (width, height) => {
 
 //function to get random num
 const randomNum = (max) => {
-   return Math.random() * max;
+    return Math.random() * max;
 }
 
 //function to Basic coloring of the grid
@@ -84,15 +86,15 @@ const playChangeGrid = () => {
             //Finding squares for death
             if (listSquare[i][j].className === "liveSquare") {
                 if (countLiveNeighbors < 2 || countLiveNeighbors > 3) {
-                    listToRemove.push({"i":i,"j":j});
+                    listToRemove.push({ "i": i, "j": j });
                 }
             }
 
             //Finding exactly 3 neighbors for a dead square
             else if (countLiveNeighbors === 3) {
-                listToLive.push({"i":i,"j":j});
+                listToLive.push({ "i": i, "j": j });
             }
-           
+
 
         }
     }
@@ -100,18 +102,18 @@ const playChangeGrid = () => {
     //Killing squares
     listToRemove.forEach(item => {
         listSquare[item.i][item.j].classList.remove("liveSquare");
-        listSquare[item.i][item.j].className="deadSquare";
+        listSquare[item.i][item.j].className = "deadSquare";
     });
     //Living squares
     listToLive.forEach(item => {
         listSquare[item.i][item.j].classList.remove("deadSquare");
-        listSquare[item.i][item.j].className="liveSquare";
+        listSquare[item.i][item.j].className = "liveSquare";
     });
 }
 
 
 
-listSquare=createGrid(50, 50);
+listSquare = createGrid(50, 50);
 BasicColoringOfTheGrid(50 * 50);
 setInterval(playChangeGrid, 1000);//Activation the play, every second
 
